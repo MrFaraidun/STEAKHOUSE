@@ -11,7 +11,7 @@ import { ReactLenis } from 'lenis/react';
 
 function App() {
   return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+    <ReactLenis root options={{ lerp: 0.15, duration: 1.2, smoothWheel: true, wheelMultiplier: 1 }}>
       <div className="bg-primary min-h-screen text-text-light selection:bg-accent selection:text-primary">
         <Navbar />
         <main>

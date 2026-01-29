@@ -30,3 +30,15 @@ h6 {
 .font-script {
   font-family: 'Allura', cursive;
 }
+
+/* Prevent black screen during fast scrolling */
+main {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+section {
+  will-change: transform;
+  transform: translateZ(0);
+}

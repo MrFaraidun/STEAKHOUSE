@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import appetizerImg from '../assets/menu_appetizer_1769720173908.png';
 import mainImg from '../assets/menu_main_1769720188996.png';
@@ -54,23 +54,35 @@ const Menu = () => {
     return (
         <section id="menu" className="bg-secondary relative min-h-screen py-16 md:py-24 flex items-center justify-center overflow-hidden">
 
-            {/* Background Image Reveal */}
-            <div className="absolute inset-0 pointer-events-none transition-opacity duration-700 ease-linear opacity-60">
-                <AnimatePresence mode="wait">
-                    {(hoveredCategory || activeCategory) && (
-                        <motion.img
-                            key={hoveredCategory || activeCategory}
-                            src={categories.find(c => c.id === (hoveredCategory || activeCategory))?.img}
-                            alt="Background"
-                            initial={{ opacity: 0, scale: 1.1 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="w-full h-full object-cover opacity-80 blur-sm"
-                        />
-                    )}
-                </AnimatePresence>
-                <div className="absolute inset-0 bg-primary/80"></div>
+            {/* Base Background - Always Visible */}
+            <div className="absolute inset-0 bg-secondary">
+                <img
+                    src={appetizerImg}
+                    alt="Menu Background"
+                    className="w-full h-full object-cover opacity-30 blur-sm"
+                />
+                <div className="absolute inset-0 bg-primary/70"></div>
             </div>
+
+            {/* Animated Overlay - Crossfades Between Images */}
+            {categories.map((category) => (
+                <div
+                    key={category.id}
+                    className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+                    style={{
+                        opacity: (hoveredCategory === category.id || activeCategory === category.id) ? 0.4 : 0,
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden'
+                    }}
+                >
+                    <img
+                        src={category.img}
+                        alt={category.title}
+                        className="w-full h-full object-cover blur-sm"
+                    />
+                </div>
+            ))}
+            <div className="absolute inset-0 bg-primary/60"></div>
 
 
             <div className="container mx-auto px-6 relative z-10 max-w-4xl">
